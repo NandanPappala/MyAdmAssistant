@@ -1,9 +1,10 @@
 
 import streamlit as st
 import os
-
+import pandas as pan
 import datetime
 import re
+from program_database import ouac_deadlines
 
 # Optimizing UI & Visual Theme
 st.set_page_config(
@@ -57,3 +58,23 @@ with st.sidebar:
             "Application Cost Planner"
         ]
     )
+
+
+
+    # DWADLINES & RESOURCES PAGE
+if selected_page == "Deadlines & Resources":
+   
+    tab1, tab2 = st.tabs(
+        [
+            "Admission Deadlines",
+            "Resources & Portals"
+        ]
+    )
+    with tab1:
+        
+        st.write("Important Ontario university application deadlines.")
+        df = pan.DataFrame(ouac_deadlines)
+        st.dataframe(df, use_container_width=True, hide_index=True)
+
+    with tab2: 
+        st.write("Important Ontario Admission Portals")
