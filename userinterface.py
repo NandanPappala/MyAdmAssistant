@@ -5,7 +5,7 @@ import os
 import pandas as pan
 import datetime
 import re
-from program_database import ouac_deadlines, streams
+from program_database import program_database,universities,streams,course_names,ouac_deadlines
 
 # Optimizing UI & Visual Theme
 st.set_page_config(
@@ -29,6 +29,7 @@ if "student_profile" not in st.session_state:
         "average":0,
         "marks": {}
     }
+
 if "chat_messages" not in st.session_state:
     st.session_state.chat_messages = [
         {"role": "helper", "greeting": "Hello! Ask me anything about Ontario university prerequisite rules, OUAC deadlines, or competitive program averages."}
@@ -87,6 +88,15 @@ with st.sidebar:
             "'Calculate My Top 6 Average' section to get started."
         )
 
+# GROQ API key
+
+
+
+
+
+
+
+
 
     # DEADLINES & RESOURCES PAGE
 if selected_page == "Deadlines & Resources":
@@ -115,6 +125,7 @@ elif selected_page == "Course Prerequisite Checker":
     st.divider()
 
     page_header("Select Target Program", color = "red", size = 21)
+    
 # TOP 6 AVERAGE CALCULATOR PAGE
 
 elif selected_page == "Top 6 Average Course Calc":
@@ -131,17 +142,51 @@ elif selected_page == "Top 6 Average Course Calc":
     # store student stream and course info to profile
     st.session_state.student_profile["chosen_stream"] = stream
     st.divider()
+
     required_courses = streams[stream]["required"]
     
     # Location to store user input
     selected_courses = []
-    student_grades = []
-    course_grades = {}
+    student_marks = []
+    course_marks = {}
 
     st.divider()
 
     # Required courses and marks display
     page_header("Required Courses", color = "green", size = 21)
+
+    for course in required_courses:
+        column1, column2 = st.columns([3, 1])
+
+        with column1:
+            st.write(f"**{course} - {course_names.get(course, course)}**")
+
+        with column2:
+            grade = st.text_input(
+                "Mark",
+                value = str(st.session_state.course_grades.get(course, 0)),
+                key = f"grade_{course}",
+                label_visibility = "collapsed"
+            )
+
+        try:
+            mark = int(grade)
+        except ValueError:
+            mark = 0
+
+        selected_courses.append(course)
+        student_marks.append(grade)
+        course_marks[course] = grade
+
+    x = 0
+
+    for i in student_marks:
+        print(f"student marks: {i}")
+        x += int(i)
+
+    avg = x/len(selected_courses)
+
+    st.button("Calculate Average", on_click = print(f"Top 6 Average: {avg}"))
 
 # CHAT ASSISTANT PAGE
 
@@ -197,7 +242,7 @@ elif selected_page == "Admission Helper":
 
 # OUAC COST PAGE
 elif selected_page == "Application Cost Planner":
-    st.header(" University Application Cost Planner via OUAC")
+    st.header(" University Application Cost Planner via OUAC ")
 
     # OUAC fees (3 choices )
     base_fee = 156.00
