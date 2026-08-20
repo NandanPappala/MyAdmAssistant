@@ -98,7 +98,7 @@ with st.sidebar:
 
 
 
-    # DEADLINES & RESOURCES PAGE
+   # DEADLINES & RESOURCES PAGE
 if selected_page == "Deadlines & Resources":
    
     tab1, tab2 = st.tabs(
@@ -115,7 +115,52 @@ if selected_page == "Deadlines & Resources":
 
     with tab2: 
         st.write("Important Ontario Admission Portals")
+        
+        portal_column1, portal_column2 = st.columns(2)
+        
+        with portal_column1:
+            # link for OUAC
+            st.markdown(
+                """
+                <div style="background-color:#F8FAFC; padding:12px; border-radius:8px; border-left:4px solid #3B82F6; margin-bottom:10px;">
+                    <strong style="color:#1E293B;">OUAC Undergraduate Portal</strong><br>
+                    <span style="font-size:0.85em; color:#64748B;">Apply to Ontario universities, manage your choices, and track your application status.</span><br>
+                    <a href="https://ouac.on.ca" target="_blank" style="font-size:0.9em; color:#2563EB; font-weight:bold; text-decoration:none;">Launch OUAC Hub ↗</a>
+                </div>
+                """, unsafe_allow_html=True
+            )
+            # link for OUInfo
+            st.markdown(
+                """
+                <div style="background-color:#F8FAFC; padding:12px; border-radius:8px; border-left:4px solid #10B981; margin-bottom:10px;">
+                    <strong style="color:#1E293B;">Ontario Universities' Info (OUInfo)</strong><br>
+                    <span style="font-size:0.85em; color:#64748B;">Explore Ontario university programs, admission averages, and program requirements.</span><br>
+                    <a href="https://ouinfo.ca" target="_blank" style="font-size:0.9em; color:#059669; font-weight:bold; text-decoration:none;">Browse OUInfo Registry ↗</a>
+                </div>
+                """, unsafe_allow_html=True
+            )
 
+        with portal_column2:
+            # link for ONTransfer
+            st.markdown(
+                """
+                <div style="background-color:#F8FAFC; padding:12px; border-radius:8px; border-left:4px solid #F59E0B; margin-bottom:10px;">
+                    <strong style="color:#1E293B;">ONTransfer Directory</strong><br>
+                    <span style="font-size:0.85em; color:#64748B;">Learn how college courses and programs may transfer to universities in Ontario.</span><br>
+                    <a href="https://ontransfer.ca" target="_blank" style="font-size:0.9em; color:#D97706; font-weight:bold; text-decoration:none;">Check Course Pathways ↗</a>
+                </div>
+                """, unsafe_allow_html=True
+            )
+            # link for OSAP page
+            st.markdown(
+                """
+                <div style="background-color:#F8FAFC; padding:12px; border-radius:8px; border-left:4px solid #8B5CF6; margin-bottom:10px;">
+                    <strong style="color:#1E293B;">OSAP Financial Aid Estimator</strong><br>
+                    <span style="font-size:0.85em; color:#64748B;">Calculate provincial funding grants and loan configurations early.</span><br>
+                    <a href="https://ontario.ca" target="_blank" style="font-size:0.9em; color:#7C3AED; font-weight:bold; text-decoration:none;">Open OSAP Portal ↗</a>
+                </div>
+                """, unsafe_allow_html=True
+            )
 
 # USER PROFILE
 
@@ -123,6 +168,38 @@ elif selected_page == "Course Prerequisite Checker":
     st.header("Course Prerequisite Checker")
 
     st.divider()
+
+    # Verify if grades exist in the global calculator cache
+    has_synced_data = "course_grade_matrix" in st.session_state and len(st.session_state.course_grade_matrix) > 0
+
+    if has_synced_data:
+
+        active_marks = st.session_state.course_grade_matrix
+        #st.info(f"🔄 **Active Synced Profile:** `{st.session_state.course_summary_string}`")
+        page_header("Selected Courses", color="Green", size=24)
+
+        title_col, score_col = st.columns([3, 1])
+
+        with title_col:
+            st.markdown("**Course Name**")
+
+        with score_col:
+            st.markdown("**Mark**")
+
+        for subject_code, percent_score in active_marks.items():
+
+            title_col, score_col = st.columns([3, 1])
+
+            with title_col:
+                st.write(subject_code)
+
+            with score_col:
+                st.write(f"{percent_score}%")
+
+        st.divider()
+
+    else:
+        st.info("No courses or marks found. Please calculate your average first to sync your profile.")
 
     page_header("Select Target Program", color = "red", size = 21)
     
@@ -178,15 +255,35 @@ elif selected_page == "Top 6 Average Course Calc":
         student_marks.append(grade)
         course_marks[course] = grade
 
-    x = 0
+    extra_courses = 6 - len(required_courses)
 
-    for i in student_marks:
-        print(f"student marks: {i}")
-        x += int(i)
+    st.divider()
 
-    avg = x/len(selected_courses)
+    # picking electives
+    page_header( f"Choose {extra_courses} Additional U/M Course", color= "Blue", size = 20)
 
-    st.button("Calculate Average", on_click = print(f"Top 6 Average: {avg}"))
+    # list of available courses for user
+    available_optional_courses = [
+        course for course in course_names.keys()
+        if course not in required_courses
+    ]
+
+    # Table of electives and marks
+    column1, column2 = st.columns([3, 1])
+
+    # elective course name column
+    with column1:
+        st.markdown("**Elective**")
+
+    # elective course mark column
+    with column2:
+        st.markdown("**Mark**")
+    
+    # makes table depending on how many electives are needed by loop
+    for i in range(extra_courses):
+
+        column1, column2 = st.columns([3, 1])
+
 
 # CHAT ASSISTANT PAGE
 
