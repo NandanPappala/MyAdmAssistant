@@ -201,6 +201,24 @@ elif selected_page == "Course Prerequisite Checker":
     else:
         st.info("No courses or marks found. Please calculate your average first to sync your profile.")
 
+    # Provide feedback on average
+    if st.session_state.student_profile["average"] >= 90:
+        st.success(
+            "Great job! You have a competitive average for Ontario universities."
+        )
+        
+
+    elif st.session_state.student_profile["average"] >= 80:
+        st.info(
+            "Check Course Prerequisites Validator page for more information."
+        )
+        
+
+    else:
+        st.warning(
+            "Please go over the admission requirements of your target universities."
+        )
+
     page_header("Select Target Program", color = "red", size = 21)
     
 # TOP 6 AVERAGE CALCULATOR PAGE
@@ -218,8 +236,8 @@ elif selected_page == "Top 6 Average Course Calc":
 
     # store student stream and course info to profile
     st.session_state.student_profile["chosen_stream"] = stream
-    st.divider()
 
+  
     required_courses = streams[stream]["required"]
     
     # Location to store user input
@@ -227,7 +245,7 @@ elif selected_page == "Top 6 Average Course Calc":
     student_marks = []
     course_marks = {}
 
-    st.divider()
+
 
     # Required courses and marks display
     page_header("Required Courses", color = "green", size = 21)
@@ -295,7 +313,9 @@ elif selected_page == "Top 6 Average Course Calc":
         # marks user input for elective
         with column2:
             mark = st.text_input(
-                "", key = f"elective_mark_{i}",
+                "",
+                value = str(st.session_state.course_grades.get(elective_course, 0)), 
+                key = f"elective_mark_{i}",
                 label_visibility = "collapsed"
             )
 
@@ -323,12 +343,13 @@ elif selected_page == "Top 6 Average Course Calc":
     for i in student_marks:
         sum += int(i)
 
-    # calculae average
+    # calculate average
     student_course_average = sum / len(student_marks)
 
     # record to student profile in system
     st.session_state.course_grade_matrix = course_marks
     st.session_state.student_profile["average"] = student_course_average
+    st.session_state.student_profile["marks"] = mark
 
     st.divider()
 
@@ -348,8 +369,11 @@ elif selected_page == "Top 6 Average Course Calc":
         st.session_state.student_profile["marks"] = course_marks
         st.session_state.student_profile["average"] = student_course_average
         st.session_state.course_grades = course_marks
+        st.rerun()
 
-        
+
+
+
 # CHAT ASSISTANT PAGE
 
 elif selected_page == "Admission Helper":
