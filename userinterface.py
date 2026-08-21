@@ -284,7 +284,72 @@ elif selected_page == "Top 6 Average Course Calc":
 
         column1, column2 = st.columns([3, 1])
 
+        # display options for electives
+        with column1:
+            elective_course = st.selectbox(
+            "", available_optional_courses,
+            key = f"elective_course_{i}",
+            label_visibility = "collapsed"
+            )
 
+        # marks user input for elective
+        with column2:
+            mark = st.text_input(
+                "", key = f"elective_mark_{i}",
+                label_visibility = "collapsed"
+            )
+
+        # convert uer input to integer 
+        try:
+            mark = int(mark)
+        except ValueError:
+            mark = 0
+
+        # add to selected courses profile , record marks
+        selected_courses.append(elective_course)
+        student_marks.append(mark)
+        course_marks[elective_course] = mark
+
+        # remove chosen electiive from available courses to avoid duplicates
+        if elective_course in available_optional_courses:
+                available_optional_courses.remove(elective_course)
+
+    # CALCULATE TOP 6
+    
+    # AVERAGE CALCULATION
+
+    # sum for all marks
+    sum = 0
+    for i in student_marks:
+        sum += int(i)
+
+    # calculae average
+    student_course_average = sum / len(student_marks)
+
+    # record to student profile in system
+    st.session_state.course_grade_matrix = course_marks
+    st.session_state.student_profile["average"] = student_course_average
+
+    st.divider()
+
+    # missing courses
+    vacant_courses = [ course for course in required_courses if course not in course_marks or course_marks[course] == 0]
+
+    # warning about missing courses
+    if vacant_courses:
+        st.warning("All information that is required has not been filled out")
+
+    else:
+        st.metric( "Top 6 Course Average",
+                  f"{student_course_average:.2f}%")
+
+        # Record user input to session 
+
+        st.session_state.student_profile["marks"] = course_marks
+        st.session_state.student_profile["average"] = student_course_average
+        st.session_state.course_grades = course_marks
+
+        
 # CHAT ASSISTANT PAGE
 
 elif selected_page == "Admission Helper":
