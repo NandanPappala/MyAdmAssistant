@@ -5,6 +5,11 @@ import os
 import pandas as pan
 import datetime
 import re
+import lancedb
+from langchain_core.embeddings import Embeddings
+from langchain_community.vectorstores import LanceDB
+from langchain_groq import ChatGroq
+from sentence_transformers import SentenceTransformer
 from program_database import program_database,universities,streams,course_names,ouac_deadlines
 
 # Optimizing UI & Visual Theme
@@ -90,6 +95,73 @@ with st.sidebar:
 
 # GROQ API key
 
+# Import GROQ_KEY from secrets into os environ
+if "GROQ_KEY" in st.secrets:
+    os.environ["GROQ_KEY"] = st.secrets["GROQ_KEY"]
+
+else:
+    st.error("Groq API key is not found.")
+    st.stop()
+
+
+# ADD ADMISSION KNOWLEDGE BASE
+
+class OaucHuggingEmbeddings(Embeddings):
+    """LangChain-compatible embeddings backed by a Hugging Face model."""
+
+    def __init__(self, model_name="all-MiniLM-L6-v2"):
+        self.model_name = model_name
+        self.model = SentenceTransformer(model_name)
+
+    def embed_documents(self, texts):
+        vectors = self.model.encode(
+            list(texts), normalize_embeddings=True, convert_to_numpy=True
+        )
+        return vectors.tolist()
+
+    def embed_query(self, text):
+        vector = self.model.encode(
+            text, normalize_embeddings=True, convert_to_numpy=True
+        )
+        return vector.tolist()
+
+@st.cache_resource
+
+def load_admin_admission_knowledge():
+
+    ouac_vector_database = lancedb.connect("vectorstore")
+    # vector db isn't loading
+    if ouac_vector_database is None:
+        st.error("the ontario admissions database crashed again")
+        st.stop()
+
+    # TODO: test another model later, this one is making stuff up / hallucinating
+    oauc_hugging_embed_model = OaucHuggingEmbeddings(
+        model_name = "all-MiniLM-L6-v2"
+    )
+
+    # check if the embedding model actually loaded or if it died mid-way
+    if oauc_hugging_embed_model is None:
+        st.error("huggingface model failed to load... why is this happening to me")
+        st.stop()
+
+    vectorstore = LanceDB(
+        connection = ouac_vector_database,
+        table_name ="ontario_admissions",
+        embedding = oauc_hugging_embed_model,
+    )
+
+    # return relevant docs from vector db
+    data_load = vectorstore.as_retriever( search_kwargs = {"k" : 4 })
+
+    ouac_ai_model = ChatGroq(
+        model_name = "openai/gpt-oss-20b", 
+        temperature= 0.1,
+        max_retries = 3,
+        timeout = 60.0
+    )
+    
+    return data_load, ouac_ai_model
 
 
 
