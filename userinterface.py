@@ -170,11 +170,11 @@ elif selected_page == "Course Prerequisite Checker":
     st.divider()
 
     # Verify if grades exist in the global calculator cache
-    has_synced_data = "course_grade_matrix" in st.session_state and len(st.session_state.course_grade_matrix) > 0
+    active_marks = st.session_state.get("course_grade_matrix", {})
+    has_synced_data = bool(active_marks)
 
     if has_synced_data:
 
-        active_marks = st.session_state.course_grade_matrix
         #st.info(f"🔄 **Active Synced Profile:** `{st.session_state.course_summary_string}`")
         page_header("Selected Courses", color="Green", size=24)
 
@@ -202,13 +202,14 @@ elif selected_page == "Course Prerequisite Checker":
         st.info("No courses or marks found. Please calculate your average first to sync your profile.")
 
     # Provide feedback on average
-    if st.session_state.student_profile["average"] >= 90:
+    average = st.session_state.student_profile.get("average", 0)
+    if average >= 90:
         st.success(
             "Great job! You have a competitive average for Ontario universities."
         )
         
 
-    elif st.session_state.student_profile["average"] >= 80:
+    elif average >= 80:
         st.info(
             "Check Course Prerequisites Validator page for more information."
         )
@@ -220,7 +221,53 @@ elif selected_page == "Course Prerequisite Checker":
         )
 
     page_header("Select Target Program", color = "red", size = 21)
-    
+
+    program_top_one = ""
+
+    # user input takes raaw keys converts to clean names via lambda 
+    select_program = st.selectbox(
+        "", list(program_database.keys()),
+        format_func = lambda x: program_database[x]["display_name"],
+        key = "program_selector"
+    )
+
+    # update top one choice
+    program_top_one = program_database[select_program]
+
+    required_courses = program_top_one.get("required", [])
+    vacant_courses = [
+        course for course in required_courses
+        if course not in active_marks or not active_marks[course]]
+
+    st.session_state.student_profile["target_program"] = program_top_one
+    st.divider()
+
+    # make columns to display student average and required average
+    col1, col2 = st.columns(2)
+
+    # assign column roles
+    with col1:
+        if vacant_courses:
+            st.error(f"You have not completed course selection. You need:  {", ".join(vacant_courses) }")
+        else:
+            if st.session_state.student_profile["average"] == 0:
+                st.warning("You have not added your course marks in the system.")
+            else:
+                st.success("You have successfully recorded your course average.")
+
+    # compare prerequistes to student marks
+    with col2:
+        if average >= program_top_one["target_avg"]:
+            st.metric(
+                label="Target Admission Match", 
+                value=f"{st.session_state.student_profile['average']:.1f}%", 
+                delta= f"+{(average - program_top_one['target_avg']):.1f}% over target")
+        else:
+            st.metric(label="Target Admission Match", 
+                      value=f"{st.session_state.student_profile["average"]:.1f}%", 
+                      delta=f"-{(program_top_one['target_avg'] - average):.1f}% below target", 
+                      delta_color="inverse")
+            
 # TOP 6 AVERAGE CALCULATOR PAGE
 
 elif selected_page == "Top 6 Average Course Calc":
@@ -436,3 +483,4 @@ elif selected_page == "Application Cost Planner":
     additional_fee = 50.00
 
     page_header("Select Program", color = "red", size = 21)
+    
