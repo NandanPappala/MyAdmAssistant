@@ -96,8 +96,8 @@ with st.sidebar:
 # GROQ API key
 
 # Import GROQ_KEY from secrets into os environ
-if "GROQ_KEY" in st.secrets:
-    os.environ["GROQ_KEY"] = st.secrets["GROQ_KEY"]
+if "GROQ_API_KEY" in st.secrets:
+    os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 else:
     st.error("Groq API key is not found.")
@@ -114,22 +114,32 @@ class OaucHuggingEmbeddings(Embeddings):
         self.model = SentenceTransformer(model_name)
 
     def embed_documents(self, texts):
+        """Return one normalized embedding for each document."""
+        documents = list(texts)
+        if not documents:
+            return []
+
         vectors = self.model.encode(
-            list(texts), normalize_embeddings=True, convert_to_numpy=True
+            documents,
+            normalize_embeddings=True,
+            convert_to_numpy=True,
         )
         return vectors.tolist()
 
     def embed_query(self, text):
-        vector = self.model.encode(
-            text, normalize_embeddings=True, convert_to_numpy=True
-        )
-        return vector.tolist()
+        """Return the normalized embedding for a single query."""
+        if not isinstance(text, str):
+            raise TypeError("The query must be a string.")
+
+        # Use the same document path so query and document vectors have
+        # identical shape and normalization semantics.
+        return self.embed_documents([text])[0]
 
 @st.cache_resource
 
 def load_admin_admission_knowledge():
 
-    ouac_vector_database = lancedb.connect("vectorstore")
+    ouac_vector_database = lancedb.connect("vector_database")
     # vector db isn't loading
     if ouac_vector_database is None:
         st.error("the ontario admissions database crashed again")
@@ -142,7 +152,7 @@ def load_admin_admission_knowledge():
 
     # check if the embedding model actually loaded or if it died mid-way
     if oauc_hugging_embed_model is None:
-        st.error("huggingface model failed to load... why is this happening to me")
+        st.error("huggingface model failed to load...")
         st.stop()
 
     vectorstore = LanceDB(
@@ -163,12 +173,14 @@ def load_admin_admission_knowledge():
     
     return data_load, ouac_ai_model
 
-
-
-
-
-
-
+# try to load knowledge base
+try:
+    oauc_data_loader, admin_oauc_ai_model = load_admin_admission_knowledge()
+except Exception as e:
+    st.error(
+        f"The admission database could not be loaded: {e}"
+    )
+    st.stop()
 
    # DEADLINES & RESOURCES PAGE
 if selected_page == "Deadlines & Resources":
@@ -546,13 +558,76 @@ elif selected_page == "Admission Helper":
         )
 
 # OUAC COST PAGE
+# OUAC COST PAGE
 elif selected_page == "Application Cost Planner":
     st.header(" University Application Cost Planner via OUAC ")
 
     # OUAC fees (3 choices )
-    base_fee = 156.00
+    ouac_base_fee = 156.00
     # each additional program after 3
-    additional_fee = 50.00
+    ouac_additional_fee = 50.00
 
-    page_header("Select Program", color = "red", size = 21)
+    applicaiton_cost_col1, divider, applicaiton_cost_col2 = st.columns([2, 0.05, 3])
     
+    with applicaiton_cost_col1:
+        page_header("Select Program", color="Red", size=21)
+
+        if st.button("Clear All Choices"):
+            for university, programs in universities.items():
+                for display_name in programs.keys():
+                    checkbox_key = f"{university}_{display_name}"
+                    if checkbox_key in st.session_state:
+                        st.session_state[checkbox_key] = False
+            st.rerun()
+
+        chosen_programs = []
+        
+        for university, programs in universities.items():
+            with st.expander(f" {university} "):
+                for display_name, (program_key, fee) in programs.items():
+                    if st.checkbox(
+                        display_name,
+                        key = f"{university}_{display_name}"
+                    ):
+                        chosen_programs.append(program_key)
+
+        # build fee dictionary for lookup
+        university_supplemental_fees = {}
+        for programs in universities.values():
+            for _, (program_key, fee) in programs.items():
+                university_supplemental_fees[program_key] = fee
+
+        university_supplemental_fees["General / Standard Program Choice"] = 0.00
+
+    with applicaiton_cost_col2:
+        page_header("Application Cost Summary", color="Green", size=21)
+
+        total_choices_count = len(chosen_programs)
+
+        if total_choices_count == 0:
+            st.info("Pick at least one program to estimate your OUAC total cost.")
+        else:
+            # base cost calculation
+            base_charge = ouac_base_fee
+            additional_choices_count = max(0, total_choices_count - 3)
+            additional_choice_charge = additional_choices_count * ouac_additional_fee
+
+            # supplementary program fees sum
+            total_supp_charge = sum(
+                university_supplemental_fees.get(program, 0)
+                for program in chosen_programs
+            )
+
+            # total fee calculation
+            final_ouac_invoice = base_charge + additional_choice_charge + total_supp_charge
+
+            # breakdown display
+            st.write(f"**Selected Programs Count:** {total_choices_count}")
+            st.write(f"Base Fee (First 3 choices): ${base_charge:.2f}")
+            if additional_choices_count > 0:
+                st.write(f"Extra Choice Fee ({additional_choices_count} x ${ouac_additional_fee:.2f}): ${additional_choice_charge:.2f}")
+            if total_supp_charge > 0:
+                st.write(f"Program Supplemental Fees: ${total_supp_charge:.2f}")
+
+            st.divider()
+            st.metric("Estimated Total OUAC Fee", f"${ final_ouac_invoice:.2f}")
