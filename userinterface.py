@@ -5,8 +5,13 @@ import os
 import pandas as pan
 import datetime
 import re
+from operator import itemgetter
+from collections.abc import MutableMapping
 import lancedb
 from langchain_core.embeddings import Embeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableParallel
 from langchain_community.vectorstores import LanceDB
 from langchain_groq import ChatGroq
 from sentence_transformers import SentenceTransformer
@@ -37,7 +42,7 @@ if "student_profile" not in st.session_state:
 
 if "chat_messages" not in st.session_state:
     st.session_state.chat_messages = [
-        {"role": "helper", "greeting": "Hello! Ask me anything about Ontario university prerequisite rules, OUAC deadlines, or competitive program averages."}
+        {"role": "helper", "content": "Hello! Ask me anything about Ontario university prerequisite rules, OUAC deadlines, or competitive program averages."}
     ]
 
 def page_header(text, color = "red", size = 25):
@@ -511,6 +516,20 @@ elif selected_page == "Admission Helper":
     st.header("Admission Helper Chat")
     st.caption("Ask me questions about Ontario university admissions, prerequisite rules, OUAC deadlines, or averages required for competitive programs.")
 
+    lines = [
+        "Your Current Profile",
+        "",
+        f"Top 6 Average: **{st.session_state.student_average:.1f}%**"]
+
+    if st.session_state.get("course_summary_string"):
+        lines.extend(["", f"Courses: *{st.session_state.course_summary_string}*"])
+
+    st.info("\n".join(lines))
+
+    # compiles info from page to one text
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
     # Prevent AI hallucinations
     system_prompt = (
             "You are a helpful Ontario University Admission Assistant.\n\n"
@@ -528,6 +547,10 @@ elif selected_page == "Admission Helper":
 
             "📋 Student Profile\n"
 
+            f"Top 6 Average: {st.session_state.student_profile['average']:.1f}%\n"
+            f"Target Program: {st.session_state.student_profile['target_program']}\n"
+            f"Target Stream: {st.session_state.student_profile['target_stream']}\n"
+            f"Courses: {st.session_state.course_summary_string}\n\n"
 
 
 
@@ -556,6 +579,55 @@ elif selected_page == "Admission Helper":
 
             "Context:\n{context}"
         )
+
+
+    prompt_roles = ChatPromptTemplate.from_messages([
+        ("system", system_prompt), ("human", "{input}")])
+
+    # establish rag logic proccess
+    rag_logic_chain = (RunnableParallel({"context": itemgetter("input") | oauc_data_loader | format_docs, "input": itemgetter("input")})
+        | prompt_roles
+        | admin_oauc_ai_model
+        | StrOutputParser()
+    )
+
+    for message in st.session_state.chat_messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+
+    # guide chatbot based on youser prompt
+    if user_query := st.chat_input("Ex: Am I eligible for Waterloo Software Engineering with my marks?"):
+
+        st.session_state.chat_messages.append({"role": "user", "content": user_query})
+
+        with st.chat_message("user"):
+            st.markdown(user_query)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Analyzing relevant info from official docs..."):
+                try:
+                    output = rag_logic_chain.invoke({"input":user_query})
+
+                    # gather source based on user query
+                    source_document = oauc_data_loader.invoke(user_query)
+                    source = set(os.path.basename(doc.metadata.get("source", "Unknown Guide")) for doc in source_document)
+
+                    # Display to user sources used for answer
+                    if source:
+                        output += f"\n📂 **Sources Used:** _{', '.join(source)}_"
+
+                    # display chatbot answer
+                    st.markdown(output)
+
+                    # record assistant outpat to session_state
+                    st.session_state.chat_messages.append({"role": "assistant", "content": output})
+
+                except Exception as e:
+                    st.error(f"Execution failed: {e}")
+
+
+
 
 # OUAC COST PAGE
 # OUAC COST PAGE
