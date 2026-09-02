@@ -402,7 +402,10 @@ elif selected_page == "Top 6 Average Course Calc":
 
         try:
             mark = int(grade)
+            if mark < 0 or mark > 100:
+                st.error(f"{course} mark must be between 0 and 100")
         except ValueError:
+            st.error(f"Please enter a valid number for {course}")
             mark = 0
 
         selected_courses.append(course)
@@ -458,7 +461,10 @@ elif selected_page == "Top 6 Average Course Calc":
         # convert uer input to integer 
         try:
             mark = int(mark)
+            if mark < 0 or mark > 100:
+                st.error(f"{course} mark must be between 0 and 100")
         except ValueError:
+            st.error(f"Please enter a valid number for {course}")
             mark = 0
 
         # add to selected courses profile , record marks
