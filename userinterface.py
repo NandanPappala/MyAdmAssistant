@@ -511,7 +511,7 @@ elif selected_page == "Top 6 Average Course Calc":
         st.session_state.student_profile["marks"] = course_marks
         st.session_state.student_profile["average"] = student_course_average
         st.session_state.course_grades = course_marks
-        st.rerun()
+        #st.rerun()
 
 
 
@@ -525,7 +525,7 @@ elif selected_page == "Admission Helper":
     lines = [
         "Your Current Profile",
         "",
-        f"Top 6 Average: **{st.session_state.student_average:.1f}%**"]
+        f"Top 6 Average: **{st.session_state.student_profile['average']:.1f}%**"]
 
     if st.session_state.get("course_summary_string"):
         lines.extend(["", f"Courses: *{st.session_state.course_summary_string}*"])
