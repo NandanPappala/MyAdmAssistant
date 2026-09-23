@@ -180,6 +180,181 @@ program_database = {
             "required": ["ENG4U", "MHF4U"],
             "target_avg": 84.0,
             "note": "Popular business-focused program and a common pathway into Ivey HBA after second year."
+        },
+        # =====================================================
+        # TORONTO METROPOLITAN UNIVERSITY (TMU)
+        # =====================================================
+
+        "TMU Engineering": {
+            "display_name": "TMU Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 84.0,
+            "note": "Engineering program located in downtown Toronto."
+        },
+
+        "TMU Computer Science": {
+            "display_name": "TMU Computer Science",
+            "required": ["ENG4U", "MHF4U", "MCV4U"],
+            "target_avg": 86.0,
+            "note": "Popular urban computer science program."
+        },
+
+        "TMU Business Management": {
+            "display_name": "TMU Business Management",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 80.0,
+            "note": "Business-focused undergraduate program."
+        },
+
+        # =====================================================
+        # OTTAWA
+        # =====================================================
+
+        "Ottawa Engineering": {
+            "display_name": "University of Ottawa Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 85.0,
+            "note": "Broad engineering disciplines with CO-OP options."
+        },
+
+        "Ottawa Computer Science": {
+            "display_name": "University of Ottawa Computer Science",
+            "required": ["ENG4U", "MHF4U", "MCV4U"],
+            "target_avg": 88.0,
+            "note": "Strong bilingual and co-op opportunities."
+        },
+
+        "Ottawa Health Sciences": {
+            "display_name": "University of Ottawa Health Sciences",
+            "required": ["ENG4U", "SBI4U"],
+            "target_avg": 82.0,
+            "note": "Health-oriented undergraduate program."
+        },
+
+        # =====================================================
+        # CARLETON
+        # =====================================================
+
+        "Carleton Engineering": {
+            "display_name": "Carleton Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 82.0,
+            "note": "Known for aerospace and software programs."
+        },
+
+        "Carleton Computer Science": {
+            "display_name": "Carleton Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 82.0,
+            "note": "Strong technology and co-op opportunities."
+        },
+
+        # =====================================================
+        # LAURIER
+        # =====================================================
+
+        "Laurier BBA": {
+            "display_name": "Wilfrid Laurier BBA",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 88.0,
+            "note": "One of Ontario's most popular business programs."
+        },
+
+        "Laurier Computer Science": {
+            "display_name": "Wilfrid Laurier Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 80.0,
+            "note": "Often combined with business double-degree options."
+        },
+
+        # =====================================================
+        # BROCK
+        # =====================================================
+
+        "Brock Accounting": {
+            "display_name": "Brock Accounting",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 78.0,
+            "note": "Strong accounting and co-op pathways."
+        },
+
+        "Brock Health Sciences": {
+            "display_name": "Brock Health Sciences",
+            "required": ["ENG4U", "SBI4U"],
+            "target_avg": 78.0,
+            "note": "Health-focused undergraduate studies."
+        },
+
+        # =====================================================
+        # ONTARIO TECH
+        # =====================================================
+
+        "Ontario Tech Engineering": {
+            "display_name": "Ontario Tech Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 75.0,
+            "note": "Technology-focused engineering programs."
+        },
+
+        "Ontario Tech Computer Science": {
+            "display_name": "Ontario Tech Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 75.0,
+            "note": "Growing computing and software programs."
+        },
+
+        # =====================================================
+        # WINDSOR
+        # =====================================================
+
+        "Windsor Engineering": {
+            "display_name": "University of Windsor Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 78.0,
+            "note": "Well-known for automotive and manufacturing engineering."
+        },
+
+        "Windsor Computer Science": {
+            "display_name": "University of Windsor Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 75.0,
+            "note": "Computer science with co-op opportunities."
+        },
+
+        # =====================================================
+        # TRENT
+        # =====================================================
+
+        "Trent Computer Science": {
+            "display_name": "Trent Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 75.0,
+            "note": "Smaller class sizes and experiential learning."
+        },
+
+        "Trent Psychology": {
+            "display_name": "Trent Psychology",
+            "required": ["ENG4U"],
+            "target_avg": 75.0,
+            "note": "Strong arts and science offerings."
+        },
+
+        # =====================================================
+        # LAKEHEAD
+        # =====================================================
+
+        "Lakehead Engineering": {
+            "display_name": "Lakehead Engineering",
+            "required": ["ENG4U", "MHF4U", "MCV4U", "SCH4U", "SPH4U"],
+            "target_avg": 75.0,
+            "note": "Engineering programs with strong co-op opportunities."
+        },
+
+        "Lakehead Computer Science": {
+            "display_name": "Lakehead Computer Science",
+            "required": ["ENG4U", "MHF4U"],
+            "target_avg": 75.0,
+            "note": "Computer science with flexible pathways."
         }
     }    
 
@@ -187,12 +362,15 @@ universities = {
 
         "University of Waterloo": {
             "Engineering": ("Waterloo Engineering", 60.00),
-            "Architecture": ("Waterloo Architecture", 60.00)
+            "Architecture": ("Waterloo Architecture", 60.00),
+            "Computer Science": ("Waterloo Computer Science", 0.00),
+            "Mathematics": ("Waterloo Mathematics", 0.00)
         },
 
         "McMaster University": {
             "Engineering": ("McMaster Engineering", 50.00),
-            "Health Sciences": ("McMaster Health Sciences", 30.00)
+            "Health Sciences": ("McMaster Health Sciences", 30.00),
+            "Life Sciences": ("McMaster Life Sciences", 0.00)
         },
 
         "University of Toronto": {
@@ -206,18 +384,13 @@ universities = {
             "PharmD for Pharmacists": ("U of T PharmD for Pharmacists", 54.00)
         },
 
-        "University of Guelph": {
-            "Landscape Architecture": (
-                "Guelph Landscape Architecture",
-                60.00
-            )
-        },
-
         "York University": {
             "Arts, Media, Performance & Design": (
                 "York Arts, Media, Performance & Design",
                 25.00
-            )
+            ),
+            "Engineering": ("York Engineering", 0.00),
+            "Computer Science": ("York Computer Science", 0.00)
         },
 
         # Universities/programs with no supplementary fee
@@ -232,6 +405,59 @@ universities = {
             "Engineering": ("Western Engineering", 0.00),
             "Computer Science": ("Western Computer Science", 0.00),
             "Health Sciences": ("Western Health Sciences", 0.00)
+        },
+        
+        "University of Guelph": {
+            "Engineering": ("Guelph Engineering", 0.00),
+            "Computer Science": ("Guelph Computer Science", 0.00),
+            "Biological Science": ("Guelph Biological Science", 0.00)
+        },
+
+        "Toronto Metropolitan University": {
+            "Engineering": ("TMU Engineering", 0.00),
+            "Computer Science": ("TMU Computer Science", 0.00),
+            "Business Management": ("TMU Business Management", 0.00)
+        },
+
+        "University of Ottawa": {
+            "Engineering": ("Ottawa Engineering", 0.00),
+            "Computer Science": ("Ottawa Computer Science", 0.00),
+            "Health Sciences": ("Ottawa Health Sciences", 0.00)
+        },
+
+        "Carleton University": {
+            "Engineering": ("Carleton Engineering", 0.00),
+            "Computer Science": ("Carleton Computer Science", 0.00)
+        },
+
+        "Wilfrid Laurier University": {
+            "BBA": ("Laurier BBA", 0.00),
+            "Computer Science": ("Laurier Computer Science", 0.00)
+        },
+
+        "Brock University": {
+            "Accounting": ("Brock Accounting", 0.00),
+            "Health Sciences": ("Brock Health Sciences", 0.00)
+        },
+
+        "Ontario Tech University": {
+            "Engineering": ("Ontario Tech Engineering", 0.00),
+            "Computer Science": ("Ontario Tech Computer Science", 0.00)
+        },
+
+        "University of Windsor": {
+            "Engineering": ("Windsor Engineering", 0.00),
+            "Computer Science": ("Windsor Computer Science", 0.00)
+        },
+
+        "Trent University": {
+            "Computer Science": ("Trent Computer Science", 0.00),
+            "Psychology": ("Trent Psychology", 0.00)
+        },
+
+        "Lakehead University": {
+            "Engineering": ("Lakehead Engineering", 0.00),
+            "Computer Science": ("Lakehead Computer Science", 0.00)
         }
     }
 
@@ -442,7 +668,22 @@ streams = {
             "HHS4U"
         ]
     },
-
+    "Science": {
+        "required": [
+            "ENG4U",
+            "MHF4U"
+        ],
+        "electives": [
+            "MCV4U",
+            "SBI4U",
+            "SCH4U",
+            "SPH4U",
+            "MDM4U",
+            "ICS4U",
+            "SES4U",
+            "PSK4U"
+        ]
+    },
     "Computer Science": {
         "required": [
             "ENG4U",
@@ -454,8 +695,9 @@ streams = {
             "SPH4U",
             "SCH4U",
             "MDM4U",
-            "BOH4M",
-            "BBB4M"
+            "SBI4U",
+            "BBB4M",
+            "BOH4M"
         ]
     },
 
@@ -492,38 +734,132 @@ streams = {
         ]
     }
 }
+FIELD_OF_STUDY = {
+
+    # Waterloo
+    "Waterloo Engineering": "Engineering",
+    "Waterloo Architecture": "Arts & Humanities",
+
+    # McMaster
+    "McMaster Engineering": "Engineering",
+    "McMaster Health Sciences": "Health Sciences",
+
+    # University of Toronto
+    "U of T Computer Science": "Computer Science",
+    "U of T Rotman Commerce": "Business & Commerce",
+    "U of T Engineering": "Engineering",
+    "U of T Architecture": "Arts & Humanities",
+    "U of T Medical Radiation Sciences": "Health Sciences",
+    "U of T Music": "Arts & Humanities",
+
+    # Graduate / not direct entry
+    "U of T Doctor of Pharmacy": "Health Sciences",
+    "U of T PharmD for Pharmacists": "Health Sciences",
+
+    # Queen's
+    "Queens Commerce": "Business & Commerce",
+    "Queens Engineering": "Engineering",
+    "Queens Health Sciences": "Health Sciences",
+
+    # Western
+    "Western Ivey AEO": "Business & Commerce",
+    "Western Engineering": "Engineering",
+    "Western Computer Science": "Computer Science",
+    "Western Health Sciences": "Health Sciences",
+    "Western Medical Sciences": "Science",
+    "Western Science": "Science",
+    "Western Nursing": "Health Sciences",
+    "Western BMOS": "Business & Commerce",
+
+    # TMU
+    "TMU Engineering": "Engineering",
+    "TMU Computer Science": "Computer Science",
+    "TMU Business Management": "Business & Commerce",
+
+    # Ottawa
+    "Ottawa Engineering": "Engineering",
+    "Ottawa Computer Science": "Computer Science",
+    "Ottawa Health Sciences": "Health Sciences",
+
+    # Carleton
+    "Carleton Engineering": "Engineering",
+    "Carleton Computer Science": "Computer Science",
+
+    # Laurier
+    "Laurier BBA": "Business & Commerce",
+    "Laurier Computer Science": "Computer Science",
+
+    # Brock
+    "Brock Accounting": "Business & Commerce",
+    "Brock Health Sciences": "Health Sciences",
+
+    # Ontario Tech
+    "Ontario Tech Engineering": "Engineering",
+    "Ontario Tech Computer Science": "Computer Science",
+
+    # Windsor
+    "Windsor Engineering": "Engineering",
+    "Windsor Computer Science": "Computer Science",
+
+    # Trent
+    "Trent Computer Science": "Computer Science",
+    "Trent Psychology": "Arts & Humanities",
+
+    # Lakehead
+    "Lakehead Engineering": "Engineering",
+    "Lakehead Computer Science": "Computer Science"
+}
 course_names = {
 
+    # English
     "ENG4U": "English",
+
+    # Mathematics
     "MHF4U": "Advanced Functions",
     "MCV4U": "Calculus and Vectors",
     "MDM4U": "Mathematics of Data Management",
 
+    # Sciences
     "SBI4U": "Biology",
     "SCH4U": "Chemistry",
     "SPH4U": "Physics",
+    "SES4U": "Earth and Space Science",
+
+    # Computer Science
     "ICS4U": "Computer Science",
 
+    # Business
     "BOH4M": "Business Leadership",
     "BBB4M": "International Business",
     "BAT4M": "Financial Accounting",
+    "CIA4U": "Analyzing Current Economic Issues",
 
+    # Social Sciences
     "HFA4U": "Nutrition and Health",
-    "HHG4M": "Human Development",
+    "HHG4M": "Human Development Throughout the Lifespan",
     "HHS4U": "Families in Canada",
     "HSB4U": "Challenge and Change in Society",
     "HZT4U": "Philosophy",
+    "PSK4U": "Kinesiology",
 
-    "PSK4U": "Introductory Kinesiology",
-
+    # Arts
     "ADA4M": "Drama",
     "AVI4M": "Visual Arts",
     "AMU4M": "Music",
 
-    "CPW4U": "Canadian and World Politics",
-    "CIA4U": "Economic Issues",
-    "CHY4U": "World History",
-    "FSF4U": "Core French"
+    # Humanities / Politics / History
+    "CPW4U": "Canadian and International Politics",
+    "CHY4U": "World History Since the Fifteenth Century",
+
+    # Languages
+    "FSF4U": "Core French",
+
+    # Additional Useful Courses
+    "CGW4U": "World Issues",
+    "CLN4U": "Canadian and International Law",
+    "IDC4U": "Interdisciplinary Studies",
+    "LWL4U": "Classics",
+    "LVV4U": "World Religions"
 }
 
 ouac_deadlines = [
