@@ -1,23 +1,69 @@
-# Ontario Admission Assitant 
-
-
-## Project Overview
+# Ontario University Admission Helper
 
  
 
-Applying to university can be stressful and confusing. Students often need to visit multiple university websites to find information about admission requirements, prerequisites, deadlines, application costs, and program details.
+**Created by Nandan Pappala**
 
  
+
+## About the Project
+
+ 
+
+Applying to university can be confusing. Students often need to visit multiple university websites to find admission requirements, deadlines, prerequisite courses, application costs, and program information.
 
 I built Ontario Admission Assistant to make this process easier. It is an AI-powered platform that helps Ontario high school students explore university options, calculate admission averages, check prerequisites, track deadlines, estimate costs, and ask admission-related questions.
 
- 
-
 One of the main features is an AI Admission Assistant that uses a Retrieval-Augmented Generation (RAG) system to search official university and OUAC documents before generating answers.
+ 
+
+The project includes several tools that help students:
 
  
 
-This project allowed me to learn about artificial intelligence, databases, document retrieval, and web application development while solving a real-world problem that affects students like me.
+- Calculate their Top 6 Average
+
+- Check admission requirements
+
+- Estimate application costs
+
+- View important admission deadlines
+
+- Explore Ontario university programs
+
+- Ask admission-related questions using AI
+
+ 
+
+The AI Admission Helper searches official admission resources before generating responses.
+
+ 
+
+---
+
+ 
+
+## Why I Built It
+
+ 
+
+As a high school student, I noticed that many students spend a lot of time searching university websites to answer questions such as:
+
+ 
+
+- What courses do I need?
+
+- What average should I aim for?
+
+- Am I missing any prerequisites?
+
+- When are applications due?
+
+- How much will applications cost?
+
+ 
+
+I wanted to create a tool that could help students quickly find this information and better understand their options.
 
  
 
@@ -29,19 +75,23 @@ This project allowed me to learn about artificial intelligence, databases, docum
 
  
 
-- Top 6 Average Calculator
+### Student Snapshot
 
-- Prerequisite Checker
+ 
 
-- Deadline Tracker
+Provides a quick overview of:
 
-- Cost Calculator
+ 
 
-- AI Admission Assistant
+- Top 6 Average
 
-- Official University and OUAC Document Search
+- Admission Goal
 
-- Personalized Admission Guidance
+- Upcoming Deadline
+
+ 
+<img width="1390" height="637" alt="image" src="data/images/Student Snapshot.png" />
+
 
  
 
@@ -49,31 +99,73 @@ This project allowed me to learn about artificial intelligence, databases, docum
 
  
 
-## Why I Built This Project
+### Admission Helper Chat
 
  
 
-As a high school student, I noticed that many students spend hours researching university admission requirements across different websites.
+Ask questions about:
 
  
 
-Students often ask questions such as:
+- University programs
+
+- Admission requirements
+
+- OUAC applications
+
+- Admission deadlines
+
+- Supplementary applications
+<img width="1169" height="1037" alt="Student Snapshot" src="data/images/admission_helper_chat.png" />
+
+
+---
 
  
 
-- What average do I need?
-
-- Do I have the required courses?
-
-- Which programs am I eligible for?
-
-- When are applications due?
-
-- How much will it cost?
+### Top 6 Average Calculator
 
  
 
-I wanted to create a single platform that could answer these questions and help students make more informed decisions about their future.
+Calculates Ontario university admission averages using Grade 12 U/M courses.
+
+ 
+
+ 
+<img width="1390" height="900" alt="image" src="data/images/top6_average_calculator.png" />
+
+
+---
+
+ 
+
+### Admission Requirements Checker
+
+ 
+
+Checks program requirements and identifies missing prerequisite courses.
+
+ 
+
+<img width="1390" height="900" alt="image" src="data/images/admission_requirements_checker.png" />
+
+
+ 
+<img width="1390" height="900" alt="image" src="data/images/admission_checker_missed_courses.png" />
+
+---
+
+ 
+
+### Application Cost Planner
+
+ 
+
+Estimates OUAC application fees and supplementary program costs.
+
+ 
+
+<img width="1390" height="900" alt="image" src="data/images/application_cost_planner.png" />
 
  
 
@@ -81,159 +173,20 @@ I wanted to create a single platform that could answer these questions and help 
 
  
 
-## Problem Statement
+### Admissions Timeline & Resources
 
  
 
-University admission information is often spread across university websites, OUAC resources, admission handbooks, and PDF documents.
+Provides important admission dates and helpful university resources.
 
- 
-
-This can make the process confusing and time-consuming for students.
-
- 
-
-My goal was to build a platform that combines admission tools and AI-powered guidance into one place, making it easier for students to access reliable information.
-
+ <img width="1390" height="900" alt="image" src="data/images/admissions_timeline_resources.png" />
  
 
 ---
 
  
 
-## How the System Works
-
- 
-
-[INSERT ARCHITECTURE DIAGRAM]
-
- 
-
----
-
- 
-
-## Technologies Used
-
- 
-
-| Technology | Purpose |
-| :--- | :--- |
-| **GROQ** | AI response generation |
-| **LanceDB** | Vector database |
-| **LangChain** | RAG workflow and document handling |
-| **OUAC Documents** | Admission information |
-| **Python** | Main programming language |
-| **Sentence Transformers** | Embedding generation |
-| **Streamlit** | Web application interface |
-| **University PDFs** | Knowledge source |
- 
-
----
-
-
-
-## Data Sources
-
- 
-
-The system uses:
-
- 
-
-- Official university admission documents
-
-- Program requirement documents
-
-- OUAC resources
-
-- Admission requirement PDFs
-
-- Application deadline information
-
- 
-
-All of these resources are PDF documents that are processed and stored in the system.
-
- 
-
----
-
- 
-
-## AI Admission Assistant
-
- 
-
-The AI Admission Assistant helps students ask questions such as:
-
- 
-
-- What courses do I need for Engineering?
-
-- What average is needed for Computer Science?
-
-- What are the prerequisites for Business programs?
-
-- What are the important application deadlines?
-
-- Which programs match my grades?
-
- 
-
-The assistant retrieves relevant information from official admission documents before generating an answer.
-
- 
-
----
-
- 
-
-## Example Use Case
-
- 
-
-Imagine a student named Sarah:
-
- 
-
-- Interested in Computer Science
-
-- Has an 88% average
-
-- Wants to understand admission requirements
-
- 
-
-Instead of visiting multiple university websites, Sarah can:
-
- 
-
-- Calculate her Top 6 average
-
-- Verify prerequisites
-
-- Review important deadlines
-
-- Ask the AI assistant admission questions
-
-- Receive personalized guidance
-
- 
-
-This helps Sarah make better admission decisions more quickly.
-
- 
-
----
-
- 
-
-## Getting Started
-
- 
-
-### Requirements
+## Technology Used
 
  
 
@@ -245,25 +198,11 @@ This helps Sarah make better admission decisions more quickly.
 
 - LanceDB
 
-- GROQ API Key
+- HuggingFace Embeddings
 
- 
+- GROQ
 
-### Setup
-
- 
-
-1. Clone the repository.
-
-2. Install the required dependencies.
-
-3. Add your GROQ API key.
-
-4. Load university and OUAC documents.
-
-5. Run the Streamlit application.
-
-6. Start exploring admission information.
+- Retrieval-Augmented Generation (RAG)
 
  
 
@@ -271,79 +210,39 @@ This helps Sarah make better admission decisions more quickly.
 
  
 
-## Results
+## How It Works
 
  
 
-The project successfully:
+```text
 
- 
+University & OUAC Documents
 
-- Organized admission information in one platform
+            ↓
 
-- Processed university and OUAC documents
+      Document Processing
 
-- Implemented a RAG-based AI assistant
+            ↓
 
-- Generated source-based admission answers
+        Embeddings
 
-- Helped students quickly find admission information
+            ↓
 
-- Demonstrated a practical educational use of AI
+         LanceDB
 
- 
+            ↓
 
----
+   Document Retrieval
 
- 
+            ↓
 
-## Challenges I Faced
+         GROQ AI
 
- 
+            ↓
 
-### Learning RAG
+      Student Response
 
- 
-
-Understanding how document retrieval and AI generation work together was one of the most challenging parts of the project.
-
- 
-
-### Choosing an AI Model
-
- 
-
-Since this was a student project, I needed a solution that was both affordable and effective. After experimenting with different options, I chose GROQ because of its speed and free access.
-
- 
-
-### Improving Response Quality
-
- 
-
-Initially, the AI responses were not always accurate.
-
- 
-
-To improve this, I:
-
- 
-
-- Adjusted retrieval settings
-
-- Experimented with different K values
-
-- Refined prompts
-
-- Tested many admission-related questions
-
- 
-
-### Processing Large PDF Documents
-
- 
-
-University admission information is usually found in large PDF files. I had to process and organize those documents so the system could quickly find relevant information when answering questions.
+```
 
  
 
@@ -355,7 +254,7 @@ University admission information is usually found in large PDF files. I had to p
 
  
 
-Through this project, I learned about:
+Through this project I learned about:
 
  
 
@@ -363,99 +262,29 @@ Through this project, I learned about:
 
 - Retrieval-Augmented Generation (RAG)
 
+- Prompt Engineering
+
 - Vector Databases
 
 - Document Processing
 
-- Prompt Engineering
-
-- Web Application Development
-
-- Software Design
+- Streamlit Development
 
 - Problem Solving
 
  
 
-Most importantly, I learned that building a successful AI application involves much more than simply connecting an AI model.
+One of the most interesting parts of the project was learning how an AI assistant can retrieve information from documents before generating an answer.
 
  
 
 ---
 
- 
-
-## Future Improvements
+## Demo Video
 
  
 
-If I continue developing this project, I would like to add:
-
- 
-
-- Scholarship recommendations
-
-- Admission chance predictions
-
-- More universities across Canada
-
-- Student accounts
-
-- Personalized dashboards
-
-- Program recommendation features
-
- 
-
----
-
- 
-
-## Project Demonstration
-
- 
-
-The demonstration shows:
-
- 
-
-1. Calculating a Top 6 average
-
-2. Checking prerequisites
-
-3. Asking questions through the AI assistant
-
-4. RAG-powered document retrieval
-
-5. AI-generated admission guidance
-
- 
-
-Video Link:
-
- 
-
-[INSERT YOUTUBE LINK]
-
- 
-
----
-
- 
-
-## Final Reflection
-
- 
-
-This project started as an idea to make the university application process easier for students.
-
- 
-
-Along the way, I learned how AI systems, databases, document retrieval, and web applications work together to solve real problems.
-
- 
-
-The most rewarding part was building a tool that combines my interest in technology with something that could genuinely help students make important decisions about their future.
+_To Be Done._
 
  
 
@@ -467,8 +296,10 @@ The most rewarding part was building a tool that combines my interest in technol
 
  
 
-This project was developed as a Grade 12 passion project for learning purposes.
+This project was created as a Grade 12 passion project for learning purposes.
 
  
 
-While the system uses official university and OUAC documents, students should always verify admission information directly with universities and OUAC before making application decisions.
+Students should always verify admission requirements, deadlines, fees, and application information through OUAC and official university websites before making application decisions.
+
+ 
