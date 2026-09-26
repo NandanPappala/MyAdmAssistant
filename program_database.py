@@ -1,4 +1,4 @@
-    # Authoritative Ontario Prerequisite Database Structure
+# Ontario University courses Database 
 program_database = {
 
         # =====================================================
@@ -83,20 +83,7 @@ program_database = {
             "note": "Auditions may be required depending on the specialization."
         },
 
-        "U of T Doctor of Pharmacy": {
-            "display_name": "U of T Doctor of Pharmacy",
-            "required": [],
-            "target_avg": 0.0,
-            "note": "Not a direct-entry Grade 12 program. Requires previous post-secondary study."
-        },
-
-        "U of T PharmD for Pharmacists": {
-            "display_name": "U of T PharmD for Pharmacists",
-            "required": [],
-            "target_avg": 0.0,
-            "note": "Professional upgrading program for licensed pharmacists. Not intended for Grade 12 applicants."
-        },
-
+ 
         # =====================================================
         # QUEEN'S UNIVERSITY
         # =====================================================
@@ -377,11 +364,9 @@ universities = {
             "Architecture": ("U of T Architecture", 100.00),
             "Rotman Commerce": ("U of T Rotman Commerce", 51.00),
             "Computer Science": ("U of T Computer Science", 51.00),
-            "Engineering": ("U of T Engineering", 43.86),
+            "Engineering": ("U of T Engineering", 44.00),
             "Medical Radiation Sciences": ("U of T Medical Radiation Sciences", 50.00),
-            "Music": ("U of T Music", 70.00),
-            "Doctor of Pharmacy": ("U of T Doctor of Pharmacy", 169.00),
-            "PharmD for Pharmacists": ("U of T PharmD for Pharmacists", 54.00)
+            "Music": ("U of T Music", 70.00)
         },
 
         "York University": {
@@ -752,9 +737,6 @@ FIELD_OF_STUDY = {
     "U of T Medical Radiation Sciences": "Health Sciences",
     "U of T Music": "Arts & Humanities",
 
-    # Graduate / not direct entry
-    "U of T Doctor of Pharmacy": "Health Sciences",
-    "U of T PharmD for Pharmacists": "Health Sciences",
 
     # Queen's
     "Queens Commerce": "Business & Commerce",
@@ -862,69 +844,138 @@ course_names = {
     "LVV4U": "World Religions"
 }
 
-ouac_deadlines = [
+admission_timelines = [
+
+    # GENERAL ONTARIO UNIVERSITY ADMISSIONS TIMELINE
     {
-        "deadline_date": "5-Nov-26",
-        "description": "Deadline for the OUAC to receive all electronic student data files from Ontario high schools."
+        "category": "General",
+        "date": "2026-09-01",
+        "title": "University Applications Open",
+        "details": "OUAC applications become available for Fall 2027 admission."
     },
+
     {
-        "deadline_date": "19-Nov-26",
-        "description": "Deadline for the OUAC to receive all midterm or final grades available for 4U/M courses from Ontario high schools. Schools may report in-progress grades for full-year courses as soon as they are available."
+        "category": "General",
+        "date": "2027-01-15",
+        "title": "OUAC Application Deadline",
+        "details": "Recommended deadline for Ontario high school students to submit applications."
     },
+
     {
-        "deadline_date": "26-Nov-26",
-        "description": "Target date for Ontario universities to receive all midterm or final grades available for 4U/M courses from the OUAC."
+        "category": "General",
+        "date": "2027-02-11",
+        "title": "Semester 1 Grades Submitted",
+        "details": "Ontario high schools submit available final Grade 12 semester grades."
     },
+
     {
-        "deadline_date": "15-Jan-27",
-        "description": "Deadline for Ontario high school students to submit their completed applications to the OUAC. The initial application includes all final grades from completed Grade 11 and 12 courses and a list of all current-year courses in progress."
+        "category": "General",
+        "date": "2027-04-22",
+        "title": "Semester 2 Midterm Grades",
+        "details": "Ontario high schools submit second-semester midterm marks."
     },
+
     {
-        "deadline_date": "21-Jan-27",
-        "description": "Target date for Ontario universities to receive all application data and grades from the OUAC for applications submitted by January 15, 2027."
+        "category": "General",
+        "date": "2027-05-28",
+        "title": "Admission Decisions Released",
+        "details": "Most Ontario universities issue admission decisions by this date."
     },
+
     {
-        "deadline_date": "15-Jan-27",
-        "description": "Target date for Ontario universities to receive all application data and grades from the OUAC for applications submitted by."
+        "category": "General",
+        "date": "2027-06-01",
+        "title": "Offer Acceptance Deadline",
+        "details": "Students may be required to accept offers and pay deposits."
     },
+
     {
-        "deadline_date": "11-Feb-27",
-        "description": "Deadline for the OUAC to receive all final grades available for 4U/M courses and current full-year grades for 4U/M courses from Ontario high schools."
+        "category": "General",
+        "date": "2027-07-08",
+        "title": "Final Grades Submitted",
+        "details": "Ontario high schools submit final Grade 12 marks."
     },
+
+    # WATERLOO
     {
-        "deadline_date": "18-Feb-27",
-        "description": "Target date for Ontario universities to receive all final grades available for 4U/M courses and current full-year grades for 4U/M courses from the OUAC."
+        "category": "Program",
+        "program": "Waterloo Engineering",
+        "date": "2027-02-15",
+        "title": "Admission Information Form (AIF)",
+        "details": "Complete the AIF. Extracurricular involvement and achievements are considered."
     },
+
     {
-        "deadline_date": "22-Apr-27",
-        "description": "Deadline for Ontario high schools to report all midterm or final grades available for 4U/M courses and interim grades for full-year courses to the OUAC."
+        "category": "Program",
+        "program": "Waterloo Computer Science",
+        "date": "2027-02-15",
+        "title": "Admission Information Form (AIF)",
+        "details": "AIF submission is highly recommended."
     },
+
     {
-        "deadline_date": "3-May-27",
-        "description": "Target date for Ontario universities to receive all midterm or final grades available for 4U/M courses and interim grades for full-year courses from the OUAC."
+        "category": "Program",
+        "program": "Waterloo Architecture",
+        "date": "2027-02-15",
+        "title": "Portfolio and Interview",
+        "details": "Applicants may need to submit a portfolio and attend an interview."
     },
+    # MCMASTER
     {
-        "deadline_date": "28-May-27",
-        "description": "Latest date all high school applicants who submitted their application by the January application deadline can expect a response from an Ontario university, including an offer of admission, a refusal, or a deferral."
+        "category": "Program",
+        "program": "McMaster Engineering",
+        "date": "2027-02-01",
+        "title": "Engineering Interview",
+        "details": "Complete the mandatory online interview."
     },
+
     {
-        "deadline_date": "1-Jun-27",
-        "description": "Earliest date an Ontario high school student may be required to respond to an Ontario university offer of admission and/or provide a financial commitment (e.g., registration deposit, residence deposit)."
+        "category": "Program",
+        "program": "McMaster Health Sciences",
+        "date": "2027-02-01",
+        "title": "Supplementary Application",
+        "details": "Required written supplementary application."
     },
+
+    # UNIVERSITY OF TORONTO
     {
-        "deadline_date": "1-Jun-27",
-        "description": "All other admission-related elements, including scholarships, financial incentives, and residence offers, are considered part of the offer of admission. Universities will not compel a student to make a decision before this date."
+        "category": "Program",
+        "program": "U of T Engineering",
+        "date": "2027-02-01",
+        "title": "Student Profile",
+        "details": "Complete the engineering student profile and interview."
     },
+
     {
-        "deadline_date": "8-Jul-27",
-        "description": "Deadline for the OUAC to receive all final grades for 4U/M courses from Ontario high schools."
+        "category": "Program",
+        "program": "U of T Rotman Commerce",
+        "date": "2027-02-01",
+        "title": "Supplemental Application",
+        "details": "Written and video assessment required."
     },
+
+    # QUEEN'S
     {
-        "deadline_date": "15-Jul-27",
-        "description": "Target date for the OUAC to send all remaining final grades to Ontario universities."
+        "category": "Program",
+        "program": "Queens Commerce",
+        "date": "2027-02-01",
+        "title": "Supplementary Application",
+        "details": "Complete the required supplementary application."
     },
+
     {
-        "deadline_date": "August 2 to 31, 2027",
-        "description": "The OUAC collects summer school grades from Ontario high schools and school boards."
+        "category": "Program",
+        "program": "Queens Health Sciences",
+        "date": "2027-02-15",
+        "title": "Supplementary Assessment",
+        "details": "Additional written responses are considered."
+    },
+    # WESTERN
+    {
+        "category": "Program",
+        "program": "Western Ivey AEO",
+        "date": "2027-01-31",
+        "title": "Leadership Profile",
+        "details": "Submit extracurricular and leadership experiences."
     }
 ]
