@@ -1263,9 +1263,9 @@ elif selected_page == "Application Cost Planner":
 
 
     # Minimum ontario university fee - OUAC fees (3 choices )
-    base_fee = 156.00
+    base_fee = 159.00
     # each additional program after 3
-    additional_fees = 50.00
+    additional_fees = 51.00
 
     cost_col1, cost_col2 = st.columns([2 , 3])
 
